@@ -1,0 +1,6 @@
+*.app
+*.beam
+*~
+epp.conf
+*.crt
+*.key
