@@ -48,3 +48,13 @@ contact_info(Id) ->
 domain_check(Name) ->
     Record = #domain_check{name=Name},
     epp_server:command(domain_check, Record).
+
+domain_create_delegate(Name, Ns1, Ns2, 
+    RegistrantId, Password) -> 
+    Record = #domain_create_delegate{
+        name=Name,
+        ns1=Ns1,
+        ns2=Ns2,
+        registrantId=RegistrantId,
+        password=Password},
+    epp_server:command(create_delegate, Record).

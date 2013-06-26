@@ -85,4 +85,5 @@ render_template(Template, [{Name, Value}|Rest]) ->
 ?R2P(contact_delete);
 ?R2P(contact_info);
 ?R2P(domain_check);
+?R2P(domain_create_delegate);
 ?R2P(logout).
