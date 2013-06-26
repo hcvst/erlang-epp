@@ -1,4 +1,3 @@
-
 -module(epp_sup).
 
 -behaviour(supervisor).
