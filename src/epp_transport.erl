@@ -37,8 +37,7 @@ init([]) ->
         {active, false},
         {keepalive, true},
         {certfile, epp_config:get(certfile)},
-        {keyfile, epp_config:get(keyfile)}
-        ]),    
+        {keyfile, epp_config:get(keyfile)}        ]),    
     {ok, #state{socket=Socket}, 0}.
 
 handle_call({post, Msg}, _From, State) ->

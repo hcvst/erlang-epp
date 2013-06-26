@@ -57,4 +57,50 @@ domain_create_delegate(Name, Ns1, Ns2,
         ns2=Ns2,
         registrantId=RegistrantId,
         password=Password},
-    epp_server:command(create_delegate, Record).
+    epp_server:command(domain_create_delegate, Record).
+
+domain_create_subordinate(Name, Ns1, Ns1Ip, Ns2, Ns2Ip,
+    RegistrantId, Password) ->
+    Record = #domain_create_subordinate{
+        name=Name,
+        ns1=Ns1,
+        ns1Ip=Ns1Ip,
+        ns2=Ns2,
+        ns2Ip=Ns2Ip,
+        registrantId=RegistrantId,
+        password=Password},
+    epp_server:command(domain_create_subordinate,
+        Record).
+
+domain_info(Name) ->
+    Record = #domain_info{name=Name},
+    epp_server:command(domain_info, Record).
+
+domain_add_status(Name, Status) ->
+    % currently only clientHold supported by registry
+    Record = #domain_add_status{
+        name=Name,
+        status=Status},
+    epp_server:command(domain_add_status, Record).
+
+domain_remove_status(Name, Status) ->
+    Record = #domain_remove_status{
+        name=Name,
+        status=Status},
+    epp_server:command(domain_remove_status, Record).
+
+domain_change_registrant(Name, RegistrantId) ->
+    Record = #domain_change_registrant{
+        name=Name,
+        registrantId=RegistrantId},
+    epp_server:command(domain_change_registrant, Record).
+
+domain_delete(Name) ->
+    Record = #domain_delete{name=Name},
+    epp_server:command(domain_delete, Record).
+
+poll() ->
+    epp_server:command(poll, #poll{}).
+
+ack(MessageId) ->
+    epp_server:command(ack, #ack{messageId=MessageId}).

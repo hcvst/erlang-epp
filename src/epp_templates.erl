@@ -80,10 +80,23 @@ render_template(Template, [{Name, Value}|Rest]) ->
 -define(R2P(Record), record_to_proplist(#Record{} = Rec) -> 
     lists:zip(record_info(fields, Record), tl(tuple_to_list(Rec)))).
 
+% Service Login/Logout
 ?R2P(login);
+?R2P(logout);
+% Contacts
 ?R2P(contact_create);
 ?R2P(contact_delete);
 ?R2P(contact_info);
+% Domains
 ?R2P(domain_check);
 ?R2P(domain_create_delegate);
-?R2P(logout).
+?R2P(domain_create_subordinate);
+?R2P(domain_info);
+?R2P(domain_add_status);
+?R2P(domain_remove_status);
+?R2P(domain_change_registrant);
+?R2P(domain_delete);
+% Polling
+?R2P(poll);
+?R2P(ack).
+
