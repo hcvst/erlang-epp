@@ -98,5 +98,6 @@ render_template(Template, [{Name, Value}|Rest]) ->
 ?R2P(domain_delete);
 % Polling
 ?R2P(poll);
-?R2P(ack).
-
+?R2P(ack);
+% Hello - Keepalive
+?R2P(hello).

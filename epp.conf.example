@@ -1,6 +1,8 @@
+{debug, true}.
 {host, "dnservices.co.za"}.
 {port, 3121}.
 {username, ""}.
 {password, ""}.
 {certfile, "path/to/certfile"}.
 {keyfile, "path/to/keyfile"}.
+{template_dir, "priv/templates"}.

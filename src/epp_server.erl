@@ -1,7 +1,9 @@
 -module(epp_server).
 -behaviour(gen_server).
 -define(SERVER, ?MODULE).
+-define(HELLO_INTERVAL, 15000).
 -record(state, {sessionId}).
+-include("epp.hrl").
 
 %% ------------------------------------------------------------------
 %% API Function Exports
@@ -31,18 +33,21 @@ command(Action, Record) ->
 
 init([]) ->
     SessionId = generate_session_id(),
+    %% lets try exit on close erlang:send_after(?HELLO_INTERVAL, self(), hello),
     {ok, #state{sessionId=SessionId}}.
 
 handle_call({command, Action, Record}, _From, State) ->
-    TemplateName = template_for_action(Action), 
-    {ok, Request} = epp_templates:render(TemplateName, Record,
-        State#state.sessionId),
-    {ok, Response} = epp_transport:post(Request),    
+    {ok, Response} = send_command(Action, Record, 
+        State#state.sessionId),    
     {reply, Response, State}.
 
 handle_cast(_Msg, State) ->
     {noreply, State}.
 
+handle_info(hello, State) ->
+    {ok, _} = send_command(hello, #hello{}, State#state.sessionId),
+    erlang:send_after(?HELLO_INTERVAL, self(), hello),
+    {noreply, State};
 handle_info(_Info, State) ->
     {noreply, State}.
 
@@ -55,6 +60,12 @@ code_change(_OldVsn, State, _Extra) ->
 %% ------------------------------------------------------------------
 %% Internal Function Definitions
 %% ------------------------------------------------------------------
+
+send_command(Action, Record, SessionId) ->
+    TemplateName = template_for_action(Action),
+    {ok, Request} = epp_templates:render(TemplateName, Record,
+        SessionId),
+    epp_transport:post(Request).
 
 generate_session_id() ->
     io_lib:format("EPP-~w-~w-~w", tuple_to_list(os:timestamp())).

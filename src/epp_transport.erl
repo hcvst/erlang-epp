@@ -34,11 +34,13 @@ init([]) ->
     {ok, Socket} = ssl:connect(
         epp_config:get(host), epp_config:get(port), [
         binary,
+        {exit_on_close, true},
         {active, false},
         {keepalive, true},
         {certfile, epp_config:get(certfile)},
-        {keyfile, epp_config:get(keyfile)}        ]),    
-    {ok, #state{socket=Socket}, 0}.
+        {keyfile, epp_config:get(keyfile)}
+        ]),    
+    {ok, #state{socket=Socket},0}.
 
 handle_call({post, Msg}, _From, State) ->
     ok = send(State#state.socket, Msg),
@@ -49,7 +51,12 @@ handle_cast(_Msg, State) ->
     {noreply, State}.
 
 handle_info(timeout, State) ->
-    {ok, _Greeting} = recv(State#state.socket),
+    io:format("In timeout"),
+    {ok, Greeting} = recv(State#state.socket),
+    io:format("Greeting: ~p", [Greeting]),
+    {noreply, State};
+handle_info(Other, State) ->
+    io:format("Received: ~p~n", [Other]),
     {noreply, State}.
 
 terminate(_Reason, State) ->
@@ -68,7 +75,7 @@ send(Socket, Msg) ->
     ok = ssl:send(Socket, Data),
     case epp_config:get(debug) of
         true -> io:format("Message sent: ~n~s~n", [Msg]);
-	false -> ok
+	   false -> ok
     end,
     ok.
 
@@ -80,4 +87,4 @@ recv(Socket) ->
         true -> io:format(Response);
         false -> ok
     end,
-    {ok, Response}.
+    {ok, Data}.

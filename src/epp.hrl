@@ -15,3 +15,4 @@
 -record(domain_delete, {name}).
 -record(poll, {}).
 -record(ack, {messageId}).
+-record(hello, {}).
