@@ -1,12 +1,14 @@
--module(epp_response_parser).
+-module(epp_config).
 -behaviour(gen_server).
 -define(SERVER, ?MODULE).
+-define(CONFIG_FILE, "epp.conf").
+-record(state, {config}).
 
 %% ------------------------------------------------------------------
 %% API Function Exports
 %% ------------------------------------------------------------------
 
--export([start_link/0, parse/2]).
+-export([start_link/0, get/1]).
 
 %% ------------------------------------------------------------------
 %% gen_server Function Exports
@@ -22,21 +24,20 @@
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
-parse(Action, XmlResponse) ->
-    gen_server:call(?SERVER, {parse, Action, XmlResponse}).
-
+get(Key) ->
+    gen_server:call(?SERVER, {get, Key}).
 %% ------------------------------------------------------------------
 %% gen_server Function Definitions
 %% ------------------------------------------------------------------
 
-init(Args) ->
-    {ok, Args}.
+init([]) ->
+    {ok, Terms} = file:consult(?CONFIG_FILE),
+    Config = dict:from_list(Terms),
+    {ok, #state{config=Config}}.
 
-handle_call({parse, Action, XmlResponse}, _From, State) ->
-    Response = case Action of
-    	_ -> XmlResponse
-    end,
-    {reply, {ok, Response}, State}.
+handle_call({get, Key}, _From, State) ->
+    Value = dict:fetch(Key, State#state.config),
+    {reply, Value, State}.
 
 handle_cast(_Msg, State) ->
     {noreply, State}.

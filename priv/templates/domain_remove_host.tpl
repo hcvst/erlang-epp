@@ -4,13 +4,13 @@
     <epp:update>
       <domain:update>
         <domain:name>{{name}}</domain:name>
-        <domain:add>
+        <domain:rem>
           <domain:ns>
             <domain:hostAttr>
               <domain:hostName>{{ns}}</domain:hostName>
             </domain:hostAttr>
           </domain:ns>
-        </domain:add>
+        </domain:rem>
       </domain:update>
     </epp:update>
   </epp:command>

@@ -85,7 +85,6 @@ render_template(Template, [{Name, Value}|Rest]) ->
 ?R2P(logout);
 % Contacts
 ?R2P(contact_create);
-?R2P(contact_update);
 ?R2P(contact_delete);
 ?R2P(contact_info);
 % Domains
@@ -96,13 +95,7 @@ render_template(Template, [{Name, Value}|Rest]) ->
 ?R2P(domain_add_status);
 ?R2P(domain_remove_status);
 ?R2P(domain_change_registrant);
-?R2P(domain_add_host_delegate);
-?R2P(domain_add_host_subordinate);
-?R2P(domain_remove_host);
 ?R2P(domain_delete);
-?R2P(domain_renew);
-?R2P(domain_autorenew);
-?R2P(domain_transfer);
 % Polling
 ?R2P(poll);
 ?R2P(ack);

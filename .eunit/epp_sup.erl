@@ -27,7 +27,6 @@ init([]) ->
         ?CHILD(epp_config, worker),
         ?CHILD(epp_templates, worker),
         ?CHILD(epp_transport, worker),
-        ?CHILD(epp_response_parser, worker),
         ?CHILD(epp_server, worker)
     ]} }.
 

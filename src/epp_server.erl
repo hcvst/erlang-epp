@@ -37,8 +37,9 @@ init([]) ->
     {ok, #state{sessionId=SessionId}}.
 
 handle_call({command, Action, Record}, _From, State) ->
-    {ok, Response} = send_command(Action, Record, 
-        State#state.sessionId),    
+    {ok, XmlResponse} = send_command(Action, Record, 
+        generate_session_id()), 
+    {ok, Response} = epp_response_parser:parse(Action, XmlResponse),   
     {reply, Response, State}.
 
 handle_cast(_Msg, State) ->
