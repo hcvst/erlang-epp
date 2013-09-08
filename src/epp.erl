@@ -89,7 +89,7 @@ domain_create_delegate(Name, Ns1, Ns2,
         ns2=Ns2,
         registrantId=RegistrantId,
         password=Password,
-        autorenew=Autorenew},
+        autorenew=atom_to_list(Autorenew)},
     epp_server:command(domain_create_delegate, Record).
 
 domain_create_subordinate(Name, Ns1, Ns1Ip, Ns2, Ns2Ip,
@@ -102,7 +102,7 @@ domain_create_subordinate(Name, Ns1, Ns1Ip, Ns2, Ns2Ip,
         ns2Ip=Ns2Ip,
         registrantId=RegistrantId,
         password=Password,
-        autorenew=Autorenew},
+        autorenew=atom_to_list(Autorenew)},
     epp_server:command(domain_create_subordinate,
         Record).
 
@@ -161,7 +161,7 @@ domain_renew(Name, CurExpDate) ->
     epp_server:command(domain_renew, Record).
 
 domain_autorenew(Name, Autorenew) when is_boolean(Autorenew) ->
-    Record = #domain_autorenew{name=Name, autorenew=list_to_tuple(Autorenew)},
+    Record = #domain_autorenew{name=Name, autorenew=atom_to_list(Autorenew)},
     epp_server:command(domain_autorenew, Record).
 
 domain_transfer_request(Name) ->
