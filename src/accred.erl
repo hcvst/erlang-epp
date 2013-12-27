@@ -17,11 +17,11 @@ go() ->
     %clearQueue(),
 
     io:format("***** contact_create"),
-    epp:contact_create("DNR-0006", "loc", "TestName", "TestStreet", "TestSuburb", "TestCity", "TestProvince", 
+    epp:contact_create("DNR2-0001", "loc", "TestName", "TestStreet", "TestSuburb", "TestCity", "TestProvince", 
     "TestPostcode", "ZA", "+27.123", "+49.999", "hc+dnr006@vst.io", "TestPassword"),
 
 
-    epp:contact_update("DNR-0006", "loc", "TestNameUpdated", "TestStreet", "TestSuburb", "TestCity", "TestProvince", 
+    epp:contact_update("DNR-0006", "int", "TestNameUpdatedInt", "TestStreet", "TestSuburb", "TestCity", "TestProvince", 
     "TestPostcode", "ZA", "+27.123", "+49.999", "hc+dnr006@vst.io", "TestPassword"),
 
     io:format("***** contact_create"),
@@ -56,7 +56,7 @@ go() ->
     epp:domain_renew("dnrtest0001.test.dnservices.co.za", "2014-07-14"),
 
     io:format("***** domain_change_registrant"),
-    epp:domain_change_registrant("dnrtest0001.test.dnservices.co.za", "DNR-0002"),
+    epp:domain_change_registrant("dnrtest1111.test.dnservices.co.za", "DNR-0002"),
 
     io:format("***** domain_add_status"),
     epp:domain_add_status("dnrtest0001.test.dnservices.co.za", "clientHold"),

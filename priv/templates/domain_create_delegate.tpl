@@ -23,7 +23,7 @@
     </epp:create>
     <epp:extension>
       <cozadomain:create>
-        <cozadomain:autorenew>false</cozadomain:autorenew>
+        <cozadomain:autorenew>{{autorenew}}</cozadomain:autorenew>
       </cozadomain:create>
     </epp:extension>
   </epp:command>

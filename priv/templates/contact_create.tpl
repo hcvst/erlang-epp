@@ -4,7 +4,7 @@ xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" xsi:schemaLocation="urn:ietf:
     <epp:create>
       <contact:create xsi:schemaLocation="urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd">
         <contact:id>{{id}}</contact:id>
-        <contact:postalInfo type="loc">
+        <contact:postalInfo type="{{type}}">
           <contact:name>{{name}}</contact:name>
           <contact:addr>
             <contact:street>{{street}}</contact:street>
