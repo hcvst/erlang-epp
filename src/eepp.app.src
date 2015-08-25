@@ -1,4 +1,4 @@
-{application, epp,
+{application, eepp,
  [
   {description, ""},
   {vsn, "1"},
@@ -7,6 +7,6 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { epp_app, []}},
+  {mod, { eepp_app, []}},
   {env, []}
  ]}.

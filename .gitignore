@@ -4,3 +4,5 @@
 epp.conf
 *.crt
 *.key
+.rebar/
+eepp.conf
