@@ -1,4 +1,4 @@
--module(epp_app).
+-module(eepp_app).
 
 -behaviour(application).
 
@@ -10,7 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    epp_sup:start_link().
+    eepp_sup:start_link().
 
 stop(_State) ->
     ok.

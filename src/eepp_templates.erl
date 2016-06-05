@@ -1,7 +1,7 @@
--module(epp_templates).
+-module(eepp_templates).
 -behaviour(gen_server).
 -define(SERVER, ?MODULE).
--include("epp.hrl").
+-include("eepp.hrl").
 -record(state, {templates}).
 
 %% ------------------------------------------------------------------
@@ -25,18 +25,18 @@ start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
 render(TemplateFileName, Record, SessionId) ->
-    gen_server:call(?SERVER, {render, TemplateFileName, Record, 
+    gen_server:call(?SERVER, {render, TemplateFileName, Record,
         SessionId}).
 %% ------------------------------------------------------------------
 %% gen_server Function Definitions
 %% ------------------------------------------------------------------
 
 init([]) ->
-    TemplateDir = epp_config:get(template_dir),
+    TemplateDir = eepp_config:get(template_dir),
     {ok, Filenames} = file:list_dir(TemplateDir),
     FileContents = fun(Filename) ->
-        Path = filename:absname(Filename, TemplateDir), 
-        {ok, Contents} = file:read_file(Path), 
+        Path = filename:absname(Filename, TemplateDir),
+        {ok, Contents} = file:read_file(Path),
         Contents
         end,
     Templates = dict:from_list([{Name, FileContents(Name)}
@@ -66,7 +66,7 @@ code_change(_OldVsn, State, _Extra) ->
 %% Internal Function Definitions
 %% ------------------------------------------------------------------
 
-render_template(Template, []) -> 
+render_template(Template, []) ->
     Rendered = binary_to_list(erlang:iolist_to_binary(Template)),
     {ok, Rendered};
 render_template(Template, [{Name, Value}|Rest]) ->
@@ -77,7 +77,7 @@ render_template(Template, [{Name, Value}|Rest]) ->
 
 
 %%% Record to proplist conversion
--define(R2P(Record), record_to_proplist(#Record{} = Rec) -> 
+-define(R2P(Record), record_to_proplist(#Record{} = Rec) ->
     lists:zip(record_info(fields, Record), tl(tuple_to_list(Rec)))).
 
 % Service Login/Logout

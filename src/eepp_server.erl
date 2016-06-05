@@ -1,9 +1,9 @@
--module(epp_server).
+-module(eepp_server).
 -behaviour(gen_server).
 -define(SERVER, ?MODULE).
 -define(HELLO_INTERVAL, 15000).
 -record(state, {sessionId}).
--include("epp.hrl").
+-include("eepp.hrl").
 
 %% ------------------------------------------------------------------
 %% API Function Exports
@@ -39,7 +39,7 @@ init([]) ->
 handle_call({command, Action, Record}, _From, State) ->
     {ok, XmlResponse} = send_command(Action, Record, 
         generate_session_id()), 
-    {ok, Response} = epp_response_parser:parse(Action, XmlResponse),   
+    {ok, Response} = eepp_response_parser:parse(Action, XmlResponse),   
     {reply, Response, State}.
 
 handle_cast(_Msg, State) ->
@@ -64,9 +64,9 @@ code_change(_OldVsn, State, _Extra) ->
 
 send_command(Action, Record, SessionId) ->
     TemplateName = template_for_action(Action),
-    {ok, Request} = epp_templates:render(TemplateName, Record,
+    {ok, Request} = eepp_templates:render(TemplateName, Record,
         SessionId),
-    epp_transport:post(Request).
+    eepp_transport:post(Request).
 
 generate_session_id() ->
     io_lib:format("EPP-~w-~w-~w", tuple_to_list(os:timestamp())).

@@ -1,4 +1,4 @@
--module(epp_transport).
+-module(eepp_transport).
 -behaviour(gen_server).
 -define(SERVER, ?MODULE).
 -define(HEADER_SIZE, 4).
@@ -32,13 +32,13 @@ post(Msg) ->
 
 init([]) ->
     {ok, Socket} = ssl:connect(
-        epp_config:get(host), epp_config:get(port), [
+        eepp_config:get(host), eepp_config:get(port), [
         binary,
         {exit_on_close, true},
         {active, false},
         {keepalive, true},
-        {certfile, epp_config:get(certfile)},
-        {keyfile, epp_config:get(keyfile)}
+        {certfile, eepp_config:get(certfile)},
+        {keyfile, eepp_config:get(keyfile)}
         ]),    
     {ok, #state{socket=Socket},0}.
 
@@ -73,7 +73,7 @@ send(Socket, Msg) ->
     Length = string:len(Msg) + ?HEADER_SIZE,
     Data = <<Length:32, (list_to_binary(Msg))/binary>>,
     ok = ssl:send(Socket, Data),
-    case epp_config:get(debug) of
+    case eepp_config:get(debug) of
         true -> io:format("Message sent: ~n~s~n", [Msg]);
 	   false -> ok
     end,
@@ -83,7 +83,7 @@ recv(Socket) ->
     {ok, <<Length:32/integer>>} = ssl:recv(Socket, ?HEADER_SIZE),
     {ok, Data} = ssl:recv(Socket, Length-?HEADER_SIZE),
     Response = binary_to_list(Data),
-    case epp_config:get(debug) of
+    case eepp_config:get(debug) of
         true -> io:format(Response);
         false -> ok
     end,

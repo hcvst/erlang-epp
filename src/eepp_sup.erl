@@ -1,4 +1,4 @@
--module(epp_sup).
+-module(eepp_sup).
 
 -behaviour(supervisor).
 
@@ -24,10 +24,10 @@ start_link() ->
 
 init([]) ->
     {ok, { {one_for_one, 5, 10}, [
-        ?CHILD(epp_config, worker),
-        ?CHILD(epp_templates, worker),
-        ?CHILD(epp_transport, worker),
-        ?CHILD(epp_response_parser, worker),
-        ?CHILD(epp_server, worker)
+        ?CHILD(eepp_config, worker),
+        ?CHILD(eepp_templates, worker),
+        ?CHILD(eepp_transport, worker),
+        ?CHILD(eepp_response_parser, worker),
+        ?CHILD(eepp_server, worker)
     ]} }.
 
