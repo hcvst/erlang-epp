@@ -72,7 +72,7 @@ render_template(Template, []) ->
 render_template(Template, [{Name, Value}|Rest]) ->
     Pattern = io_lib:format("{{~s}}", [Name]),
     {ok, Re} = re:compile(Pattern),
-    PartialRender = re:replace(Template, Re, Value),
+    PartialRender = re:replace(Template, Re, Value, [global]),
     render_template(PartialRender, Rest).
 
 
