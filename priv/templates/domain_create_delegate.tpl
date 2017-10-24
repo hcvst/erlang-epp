@@ -16,6 +16,9 @@
           </domain:hostAttr>
         </domain:ns>
         <domain:registrant>{{registrantId}}</domain:registrant>
+        <domain:contact type="admin">{{registrantId}}</domain:contact>
+        <domain:contact type="tech">{{registrantId}}</domain:contact>
+        <domain:contact type="billing">{{registrantId}}</domain:contact>
         <domain:authInfo>
           <domain:pw>{{password}}</domain:pw>
         </domain:authInfo>
